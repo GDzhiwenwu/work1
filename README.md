@@ -15,12 +15,8 @@ Mtop是阿里巴巴集团的API网关，为集团内客户端、H5提供统一�
     1. 监控指标：实时实例健康度（CPU/内存/GC）、接口监控（QPS/P99/成功率）
     2. 链路追踪：全链路traceId透传
 ## 方案选型
-| 网关 | 优势 | 劣势 | 选型建议 |
-| --- | --- | --- | --- |
-| Nginx | + 高性能：基于多进程/事件驱动模型，支持百万级并发，适合边缘流量入口；<br/>+ 功能成熟：反向代理、负载均衡、SSL加速等场景优化完善；<br/>+ 语言无关：可作为通用网关，独立于业务技术栈。 | + 动态配置需依赖Lua脚本或第三方模块（如Nginx Plus），与微服务治理组件（如注册中心）集成成本较高；<br/>+ 功能扩展依赖模块开发，灵活性低于Spring Cloud Gateway。 | 适合作为边缘网关处理高性能需求，或与非Java服务混合部署的场景； |
-| Zuul 1.0 | + 早期Spring Cloud默认网关，与Spring生态兼容性较好；<br/>+ 支持简单的路由和过滤功能，适合基础场景。 | + 同步阻塞线程模型，高并发场景下性能较差；   功能相对单一，动态配置能力弱；<br/>+ 社区活跃度下降，逐步被Spring Cloud Gateway取代。 | 仅建议旧项目兼容使用，新项目推荐Spring Cloud Gateway。 |
-| Spring Cloud Gateway | + 原生整合Spring Cloud生态，支持动态路由、限流、熔断等微服务治理功能，扩展点丰富；<br/>+ 基于异步非阻塞的Reactor模型（Netty实现），性能优于同步模型的Zuul；<br/>+ 支持通过Java代码或配置文件灵活定义路由规则，与配置中心（如Nacos）无缝集成；<br/>+ 提供过滤器链机制（GlobalFilter、GatewayFilter），支持自定义逻辑扩展。 | + 依赖Spring技术栈，非Java生态集成成本较高；<br/>+ 功能复杂度较高，学习曲线陡峭。 | 优先用于Java微服务体系，需深度集成Spring生态及动态治理功能； |
-从上面表格来看，Spring Cloud Gateway无疑是最佳的API网关方案，Spring Cloud Gateway依赖Springboot 2以上版本，然后我们项目使用Spring boot 1.5版本，引入Spring Cloud Gateway需升级SpringBoot版本。
+<img width="960" alt="image" src="https://github.com/user-attachments/assets/f7eafab6-e4d9-4ea8-a457-632b41fa6e15" />
+
 <font style="color:rgb(44, 44, 54);">多个项目共享同一 Maven 父项目，升级 Spring Boot 版本成本高且无计划。</font>
 因此，为<font style="color:rgb(44, 44, 54);">兼容 Spring Boot 1.5 的 API 网关方案，短期内</font>我们选择自建API网关，技术方案采用异步Servlet和AsyncHttpClient。
 当然，后续有升级jdk和SpringBoot版本时，我们也会将API网关切换为Spring Cloud Gateway。
