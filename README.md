@@ -40,7 +40,7 @@ Mtop是阿里巴巴集团的API网关，为集团内客户端、H5提供统一�
 <font style="color:rgb(51, 51, 51);background-color:rgb(253, 253, 253);">我们设计基于URL参数的灰度分离功能，携带特殊版本号的请求会请求到灰度机器</font>
 ![](https://cdn.nlark.com/yuque/0/2025/png/42512334/1747235612636-01509725-0be1-4a61-b7b4-76acd6bd2ae4.png)
 ### 接口限流
-+ <font style="color:rgb(44, 44, 54);">支持单机、接口、CPU使用率等级别流量控制，防止网关超载崩溃</font>
++ <font style="color:rgb(44, 44, 54);">接入sentinel限流功能，支持单机、接口、CPU使用率等级别流量控制，防止网关超载崩溃</font>
 ### 监控告警
 + <font style="color:rgb(44, 44, 54);">容器基础指标监控：CPU、内存、JVM、带宽等</font>
 + <font style="color:rgb(44, 44, 54);">客户端、网关、下游业务机指标监控：调用量、调用方式、响应时间、错误率等</font>
